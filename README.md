@@ -1,7 +1,6 @@
-# ELBAS (Elastic Load Balancers & AutoScaling)
+# ELBAS (Elastic Load Balancer & AutoScaling)
 
-ELBAS was written to ease the deployment of Rails applications to AWS AutoScale groups. It's
-process is as follows:
+ELBAS was written to ease the deployment of Rails applications to AWS AutoScale groups. ELBAS will:
 
 - Deploy your code to each running instance connected to a given AutoScale group
 - After deployment, create an AMI from one of the running instances
@@ -14,17 +13,7 @@ This ensures that your current and future servers will be running the newly depl
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'elbas'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install elbas
+From GitHub for now, sorry!
 
 ## Configuration
 

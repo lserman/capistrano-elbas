@@ -1,6 +1,16 @@
-# Elbas
+# ELBAS (Elastic Load Balancers & AutoScaling)
 
-TODO: Write a gem description
+ELBAS was written to ease the deployment of Rails applications to AWS AutoScale groups. It's
+process is as follows:
+
+- Deploy your code to each running instance connected to a given AutoScale group
+- After deployment, create an AMI from one of the running instances
+- Attach the AMI with the new code to a new AWS Launch Configuration
+- Update your AutoScale group to use the new launch configuration
+- Delete any old AMIs created by ELBAS
+- Delete any old launch configurations created by ELBAS
+
+This ensures that your current and future servers will be running the newly deployed code.
 
 ## Installation
 
@@ -16,14 +26,36 @@ Or install it yourself as:
 
     $ gem install elbas
 
+## Configuration
+
+Below are the Capistrano configuration options with their defaults:
+
+```ruby
+set :aws_access_key_id,     ENV['AWS_ACCESS_KEY_ID']
+set :aws_secret_access_key, ENV['AWS_SECRET_ACCESS_KEY'
+set :aws_autoscale_instance_size, 'm1.small'
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+Instead of using Capistrano's `server` method, use `autoscale` instead in `deploy/production.rb` (or
+whichever environment you're deploying to). Provide the name of your AutoScale group instead of a
+hostname:
 
-## Contributing
+```ruby
+autoscale 'production', user: 'apps', roles: [:app, :web, :db]
+```
 
-1. Fork it ( https://github.com/[my-github-username]/elbas/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+That's it! Run `cap production deploy`. ELBAS will print the following log statements during your
+deployment:
+
+```
+"ELBAS: Adding server: ec2-XX-XX-XX-XXX.compute-1.amazonaws.com"
+"ELBAS: Creating EC2 AMI from i-123abcd"
+"ELBAS: Created AMI: ami-123456"
+"ELBAS: Creating an EC2 Launch Configuration for AMI: ami-123456"
+"ELBAS: Created Launch Configuration: elbas-lc-ENVIRONMENT-UNIX_TIMESTAMP"
+"ELBAS: Attaching Launch Configuration to AutoScale Group"
+"ELBAS: Deleting old launch configuration: elbas-lc-production-123456"
+"ELBAS: Deleting old image: ami-999999"
+```

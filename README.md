@@ -15,9 +15,9 @@ This ensures that your current and future servers will be running the newly depl
 
 Bundle the gem, this is only available from GitHub for now, sorry!
 
-Add
+Add this statement to your Capfile:
 
-`require 'elbas/capistrano'` to your Capfile.
+`require 'elbas/capistrano'`
 
 ## Configuration
 

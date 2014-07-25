@@ -13,7 +13,11 @@ This ensures that your current and future servers will be running the newly depl
 
 ## Installation
 
-From GitHub for now, sorry!
+Bundle the gem, this is only available from GitHub for now, sorry!
+
+Add
+
+`require 'elbas/capistrano'` to your Capfile.
 
 ## Configuration
 

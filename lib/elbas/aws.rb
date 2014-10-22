@@ -50,7 +50,11 @@ module Elbas
     private
 
       def credentials
-        { access_key_id: fetch(:aws_access_key_id), secret_access_key: fetch(:aws_secret_access_key) }
+        { 
+          access_key_id: fetch(:aws_access_key_id), 
+          secret_access_key: fetch(:aws_secret_access_key), 
+          region: fetch(:aws_region)
+        }
       end
 
   end

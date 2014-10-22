@@ -50,11 +50,11 @@ module Elbas
     private
 
       def credentials
-        { 
+        _credentials = { 
           access_key_id: fetch(:aws_access_key_id), 
           secret_access_key: fetch(:aws_secret_access_key), 
-          region: fetch(:aws_region)
         }
+        _credentials.merge(region: fetch(:aws_region)) if fetch(:aws_region)
       end
 
   end

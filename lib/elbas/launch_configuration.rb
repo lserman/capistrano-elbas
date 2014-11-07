@@ -33,7 +33,11 @@ module Elbas
       end
 
       def create_options
-        { security_groups: base_ec2_instance.security_groups.to_a, detailed_instance_monitoring: false }
+        {
+          security_groups: base_ec2_instance.security_groups.to_a,
+          detailed_instance_monitoring: true,
+          associate_public_ip_address: true
+        }
       end
 
       def instance_size

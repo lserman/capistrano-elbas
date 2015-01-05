@@ -13,9 +13,7 @@ This ensures that your current and future servers will be running the newly depl
 
 ## Installation
 
-Bundle the gem, this is only available from GitHub for now, sorry!
-
-`gem 'elbas', github: 'lserman/capistrano-elbas'`
+`gem 'elbas'`
 
 Add this statement to your Capfile:
 

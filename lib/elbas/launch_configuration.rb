@@ -33,11 +33,25 @@ module Elbas
       end
 
       def create_options
-        {
+        _options = {
           security_groups: base_ec2_instance.security_groups.to_a,
           detailed_instance_monitoring: true,
-          associate_public_ip_address: true
+          associate_public_ip_address: true,
         }
+
+        if asgroup_already_had_launch_configuration_attached?
+          _options.merge user_data: old_launch_configuration.user_data
+        end
+
+        _options
+      end
+
+      def asgroup_already_had_launch_configuration_attached?
+        !!old_launch_configuration
+      end
+
+      def old_launch_configuration
+        @_old_launch_configuration ||= asgroup.launch_configurations.first
       end
 
       def instance_size

@@ -1,0 +1,13 @@
+language: ruby
+cache: bundler
+rvm:
+- 2.0.0
+deploy:
+  provider: rubygems
+  gem:
+    release: elbas
+  on:
+    repo: lserman/capistrano-elbas
+    branch: master
+  api_key:
+    secure: l7oX8UC0qhvbTQioFOaRy6sx3T1+JKr2MxdcEvgqZDg6hx2l2WhnZemmm0FtvjKBWC65Sk/ygT0PmeekTVzQIcK8E6Bz/mtTTbOfD/wxdOzbJfOXGYKy8amCNvPEQ+DLIkMY0hxx23t7YLj/MIu53vKCAOEwKMKMylUZrYizZWk=

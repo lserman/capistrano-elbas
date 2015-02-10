@@ -1,7 +1,4 @@
 require 'elbas'
-require 'elbas/aws'
-require 'elbas/ami'
-require 'elbas/launch_configuration'
 
 namespace :elbas do
   task :scale do
@@ -12,8 +9,9 @@ namespace :elbas do
       p "ELBAS: Created AMI: #{ami.id}"
       Elbas::LaunchConfiguration.create(ami) do |lc|
         p "ELBAS: Created Launch Configuration: #{lc.name}"
-        lc.attach_to_asgroup!
+        lc.attach_to_autoscale_group!
       end
     end
+
   end
 end

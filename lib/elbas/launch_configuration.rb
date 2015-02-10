@@ -1,5 +1,5 @@
 module Elbas
-  class LaunchConfiguration < AWS
+  class LaunchConfiguration < AWSResource
 
     def self.create(ami, &block)
       lc = new
@@ -10,13 +10,13 @@ module Elbas
     end
 
     def save(ami)
-      info "Creating an EC2 Launch Configuration for AMI: #{ami.id}"
-      @aws_counterpart = autoscaling.launch_configurations.create(timestamp(name_prefix), ami.id, instance_size, create_options)
+      info "Creating an EC2 Launch Configuration for AMI: #{ami.aws_counterpart.id}"
+      @aws_counterpart = autoscaling.launch_configurations.create(name, ami.aws_counterpart.id, instance_size, create_options)
     end
 
-    def attach_to_asgroup!
+    def attach_to_autoscale_group!
       info "Attaching Launch Configuration to AutoScale Group"
-      asgroup.update(launch_configuration: aws_counterpart)
+      autoscale_group.update(launch_configuration: aws_counterpart)
     end
 
     def destroy(launch_configurations = [])
@@ -28,8 +28,12 @@ module Elbas
 
     private
 
-      def name_prefix
-        "elbas-lc-#{environment}"
+      def name
+        timestamp "ELBAS-#{environment}-LC"
+      end
+
+      def instance_size
+        fetch(:aws_autoscale_instance_size, 'm1.small')
       end
 
       def create_options
@@ -39,28 +43,20 @@ module Elbas
           associate_public_ip_address: true,
         }
 
-        if asgroup_already_had_launch_configuration_attached?
-          _options.merge user_data: old_launch_configuration.user_data
+        if user_data = fetch(:aws_launch_configuration_user_data, nil)
+          _options.merge user_data: user_data
         end
 
         _options
       end
 
-      def asgroup_already_had_launch_configuration_attached?
-        !!old_launch_configuration
+      def deployed_with_elbas?(lc)
+        lc.name =~ /ELBAS/
       end
 
-      def old_launch_configuration
-        @_old_launch_configuration ||= asgroup.launch_configurations.first
-      end
-
-      def instance_size
-        fetch(:aws_autoscale_instance_size, 'm1.small')
-      end
-
-      def garbage
+      def trash
         autoscaling.launch_configurations.to_a.select do |lc|
-          lc.name =~ /#{name_prefix}/i
+          deployed_with_elbas? lc
         end
       end
 

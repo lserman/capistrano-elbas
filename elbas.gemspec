@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Elbas::VERSION
   spec.authors       = ["Logan Serman"]
   spec.email         = ["logan.serman@metova.com"]
-  spec.summary       = 'Capistrano plugin for deploying to AWS ASGroups.'
-  spec.description   = "#{spec.summary}. Deploys to all instances in a group, creates a fresh AMI post-deploy, and attaches the AMI to your ASGroup."
+  spec.summary       = 'Capistrano plugin for deploying to AWS AutoScale Groups.'
+  spec.description   = "#{spec.summary}. Deploys to all instances in a group, creates a fresh AMI post-deploy, and attaches the AMI to your AutoScale Group."
   spec.homepage      = "http://github.com/metova/elbas"
   spec.license       = "MIT"
 
@@ -20,11 +20,11 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "minitest"
-  spec.add_development_dependency "minitest-reporters"
+  spec.add_development_dependency "rspec"
   spec.add_development_dependency "webmock"
 
   spec.add_dependency 'aws-sdk', '~> 1'
   spec.add_dependency 'capistrano', '> 3.0.0'
+  spec.add_dependency 'activesupport', '>= 4.0.0'
 
 end

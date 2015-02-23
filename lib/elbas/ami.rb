@@ -12,7 +12,7 @@ module Elbas
     end
 
     def save
-      info "Creating EC2 AMI from #{base_ec2_instance.id}"
+      info "Creating EC2 AMI from EC2 Instance: #{base_ec2_instance.id}"
       @aws_counterpart = ec2.images.create \
         name: name,
         instance_id: base_ec2_instance.id,
@@ -21,7 +21,7 @@ module Elbas
 
     def destroy(images = [])
       images.each do |i|
-        info "Deleting old image: #{i.id}"
+        info "Deleting old AMI: #{i.id}"
         i.delete
       end
     end

@@ -6,7 +6,7 @@ namespace :elbas do
     set :aws_secret_access_key, fetch(:aws_secret_access_key, ENV['AWS_SECRET_ACCESS_KEY'])
 
     Elbas::AMI.create do |ami|
-      p "ELBAS: Created AMI: #{ami.id}"
+      p "ELBAS: Created AMI: #{ami.aws_counterpart.id}"
       Elbas::LaunchConfiguration.create(ami) do |lc|
         p "ELBAS: Created Launch Configuration: #{lc.name}"
         lc.attach_to_autoscale_group!

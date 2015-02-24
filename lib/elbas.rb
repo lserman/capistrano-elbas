@@ -1,4 +1,5 @@
 require 'aws-sdk'
+require 'capistrano'
 require 'active_support/concern'
 
 require 'elbas/version'

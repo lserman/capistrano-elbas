@@ -8,7 +8,7 @@ namespace :elbas do
     Elbas::AMI.create do |ami|
       p "ELBAS: Created AMI: #{ami.aws_counterpart.id}"
       Elbas::LaunchConfiguration.create(ami) do |lc|
-        p "ELBAS: Created Launch Configuration: #{lc.name}"
+        p "ELBAS: Created Launch Configuration: #{lc.aws_counterpart.name}"
         lc.attach_to_autoscale_group!
       end
     end

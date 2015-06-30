@@ -12,13 +12,16 @@ def autoscale(groupname, *args)
 
   set :aws_autoscale_group, groupname
 
+  running_instances_count = 0
+
   running_instances.each do |instance|
     hostname = instance.dns_name || instance.private_ip_address
     p "ELBAS: Adding server: #{hostname}"
     server(hostname, *args)
+    running_instances_count += 1
   end
 
-  if running_instances.size > 0
+  if running_instances_count > 0
     after('deploy', 'elbas:scale')
   else
     p "ELBAS: AMI could not be created because no running instances were found. Is your autoscale group name correct?"

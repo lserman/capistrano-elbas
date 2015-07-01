@@ -18,7 +18,7 @@ def autoscale(groupname, *args)
     server(hostname, *args)
   end
 
-  if running_instances.size > 0
+  if running_instances.count > 0
     after('deploy', 'elbas:scale')
   else
     p "ELBAS: AMI could not be created because no running instances were found. Is your autoscale group name correct?"

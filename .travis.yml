@@ -6,7 +6,7 @@ sudo: false
 deploy:
   provider: rubygems
   gem:
-    release: elbas
+    master: elbas
   on:
     repo: lserman/capistrano-elbas
     branch: master

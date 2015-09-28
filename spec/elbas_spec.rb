@@ -47,7 +47,7 @@ describe 'ELBAS' do
         with(body: /Action=CreateLaunchConfiguration&AssociatePublicIpAddress=true&ImageId=ami-4fa54026&InstanceMonitoring.Enabled=true&InstanceType=m1.small&LaunchConfigurationName=ELBAS-production/)
     end
 
-    it 'deletes any LCs with name =~ ELBAS' do
+    it 'deletes any LCs with name =~ ELBAS-production' do
       expect(WebMock).to have_requested(:post, /autoscaling.(.*).amazonaws.com\/\z/).with(body: /Action=DeleteLaunchConfiguration&LaunchConfigurationName=ELBAS-production-LC-1234567890/)
     end
 

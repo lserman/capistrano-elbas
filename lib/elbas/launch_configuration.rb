@@ -51,7 +51,7 @@ module Elbas
       end
 
       def deployed_with_elbas?(lc)
-        lc.name =~ /ELBAS/
+        lc.name =~ /ELBAS-#{environment}/
       end
 
       def trash

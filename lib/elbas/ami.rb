@@ -7,6 +7,7 @@ module Elbas
       ami.cleanup do
         ami.save
         ami.tag 'Deployed-with' => 'ELBAS'
+        ami.tag 'Autoscale-group-name' => autoscale_group_name
         yield ami
       end
     end

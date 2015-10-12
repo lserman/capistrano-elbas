@@ -28,6 +28,7 @@ set :aws_access_key_id,     ENV['AWS_ACCESS_KEY_ID']
 set :aws_secret_access_key, ENV['AWS_SECRET_ACCESS_KEY']
 set :aws_region,            ENV['AWS_REGION']
 
+set :aws_no_reboot_on_create_ami, true
 set :aws_autoscale_instance_size, 'm1.small'
 ```
 

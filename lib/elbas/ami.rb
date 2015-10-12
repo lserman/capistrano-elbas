@@ -16,7 +16,7 @@ module Elbas
       @aws_counterpart = ec2.images.create \
         name: name,
         instance_id: base_ec2_instance.id,
-        no_reboot: true
+        no_reboot: fetch(:aws_no_reboot_on_create_ami, true)
     end
 
     def destroy(images = [])

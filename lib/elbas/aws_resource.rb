@@ -3,6 +3,7 @@ module Elbas
     include Capistrano::DSL
     include Elbas::AWS::AutoScaling
     include Elbas::AWS::EC2
+    include Elbas::Retryable
     include Logger
 
     attr_reader :aws_counterpart

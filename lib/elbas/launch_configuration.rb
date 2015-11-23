@@ -11,8 +11,8 @@ module Elbas
 
     def save(ami)
       info "Creating an EC2 Launch Configuration for AMI: #{ami.aws_counterpart.id}"
-      @aws_counterpart = with_retry do
-        autoscaling.launch_configurations.create(name, ami.aws_counterpart.id, instance_size, create_options)
+      with_retry do
+        @aws_counterpart = autoscaling.launch_configurations.create(name, ami.aws_counterpart.id, instance_size, create_options)
       end
     end
 

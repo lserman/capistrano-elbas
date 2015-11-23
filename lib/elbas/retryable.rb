@@ -6,7 +6,9 @@ module Elbas
       tries += 1
       yield
     rescue => e
+      p "Rescued #{e.message}"
       if tries < max
+        p "Retrying..."
         sleep delay
         retry
       end

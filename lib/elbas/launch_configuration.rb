@@ -37,12 +37,17 @@ module Elbas
       def instance_size
         fetch(:aws_autoscale_instance_size, 'm1.small')
       end
+      
+      def iam_instance_profile
+        fetch(:iam_instance_profile, '')
+      end
 
       def create_options
         _options = {
           security_groups: base_ec2_instance.security_groups.to_a,
           detailed_instance_monitoring: true,
           associate_public_ip_address: true,
+          iam_instance_profile: iam_instance_profile,
         }
 
         if user_data = fetch(:aws_launch_configuration_user_data, nil)

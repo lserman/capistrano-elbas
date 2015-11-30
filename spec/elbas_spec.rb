@@ -44,7 +44,7 @@ describe 'ELBAS' do
 
     it 'creates a new Launch Configuration on AWS' do
       expect(WebMock).to have_requested(:post, /autoscaling.(.*).amazonaws.com\/\z/).
-        with(body: /Action=CreateLaunchConfiguration&AssociatePublicIpAddress=true&ImageId=ami-4fa54026&InstanceMonitoring.Enabled=true&InstanceType=m1.small&LaunchConfigurationName=ELBAS-production/)
+        with(body: /Action=CreateLaunchConfiguration&AssociatePublicIpAddress=true&IamInstanceProfile=&ImageId=ami-4fa54026&InstanceMonitoring.Enabled=true&InstanceType=m1.small&KeyName=&LaunchConfigurationName=ELBAS-production/)
     end
 
     it 'deletes any LCs with name =~ ELBAS-production' do

@@ -29,6 +29,7 @@ module Elbas
         "#{str}-#{Time.now.to_i}"
       end
 
+
     private
 
       def deployed_with_elbas?(resource)

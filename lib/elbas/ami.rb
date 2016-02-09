@@ -13,6 +13,8 @@ module Elbas
 
     def save
       info "Creating EC2 AMI from EC2 Instance: #{base_ec2_instance.id}"
+      tag add_custom_tags
+
       @aws_counterpart = ec2.images.create \
         name: name,
         instance_id: base_ec2_instance.id,
@@ -27,6 +29,10 @@ module Elbas
     end
 
     private
+
+      def add_custom_tags
+        fetch(:aws_elbas_ami_custom_tags, {})
+      end
 
       def name
         timestamp "#{environment}-AMI"

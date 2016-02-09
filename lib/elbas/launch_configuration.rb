@@ -61,8 +61,6 @@ module Elbas
         unless aws_key_pair.nil?
           _options[:key_pair] = aws_key_pair
         end
-        info "autoscaling key_pair #{aws_key_pair}"
-        info "autoscaling launch_configurations_options #{_options}"
         _options
       end
 

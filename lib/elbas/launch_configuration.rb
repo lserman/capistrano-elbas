@@ -61,6 +61,7 @@ module Elbas
         if key_pair = key_pair
           _options.merge key_pair: key_pair
         end
+        info "autoscaling launch_configurations_options #{_options}"
         _options
       end
 

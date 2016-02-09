@@ -13,12 +13,11 @@ module Elbas
 
     def save
       info "Creating EC2 AMI from EC2 Instance: #{base_ec2_instance.id}"
-      tag add_custom_tags
-
       @aws_counterpart = ec2.images.create \
         name: name,
         instance_id: base_ec2_instance.id,
         no_reboot: fetch(:aws_no_reboot_on_create_ami, true)
+      tag custom_tags
     end
 
     def destroy(images = [])
@@ -30,7 +29,7 @@ module Elbas
 
     private
 
-      def add_custom_tags
+      def custom_tags
         fetch(:aws_elbas_ami_custom_tags, {})
       end
 

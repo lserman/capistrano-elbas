@@ -39,11 +39,11 @@ module Elbas
       end
 
       def detailed_instance_monitoring
-        fetch(:aws_detailed_instance_monitoring, false)
+        fetch(:aws_autoscale_detailed_instance_monitoring, false)
       end
 
       def key_pair
-        fetch(:aws_key_pair, nil)
+        fetch(:aws_autoscale_key_pair, nil)
       end
 
 
@@ -58,10 +58,9 @@ module Elbas
           _options.merge user_data: user_data
         end
 
-        if user_data = key_pair
+        if key_pair = key_pair
           _options.merge key_pair: key_pair
         end
-
         _options
       end
 

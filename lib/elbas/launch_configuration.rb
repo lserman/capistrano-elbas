@@ -42,7 +42,7 @@ module Elbas
         fetch(:aws_autoscale_detailed_instance_monitoring, false)
       end
 
-      def key_pair
+      def aws_key_pair
         fetch(:aws_autoscale_key_pair, nil)
       end
 
@@ -51,17 +51,18 @@ module Elbas
         _options = {
           security_groups: base_ec2_instance.security_groups.to_a,
           detailed_instance_monitoring: detailed_instance_monitoring,
-          associate_public_ip_address: true,
+          associate_public_ip_address: true
         }
 
         if user_data = fetch(:aws_launch_configuration_user_data, nil)
           _options.merge user_data: user_data
         end
 
-        if key_pair = key_pair
-          _options.merge key_pair: key_pair
+        unless aws_key_pair.nil?
+          _options.merge key_pair: aws_key_pair
         end
-        info "autoscaling launch_configurations_options #{_options}"
+        debug "autoscaling key_pair #{key_pair}"
+        debug "autoscaling launch_configurations_options #{_options}"
         _options
       end
 

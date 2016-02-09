@@ -38,10 +38,15 @@ module Elbas
         fetch(:aws_autoscale_instance_size, 'm1.small')
       end
 
+      def detailed_instance_monitoring
+        fetch(:aws_detailed_instance_monitoring, false)
+      end
+
+
       def create_options
         _options = {
           security_groups: base_ec2_instance.security_groups.to_a,
-          detailed_instance_monitoring: true,
+          detailed_instance_monitoring: detailed_instance_monitoring,
           associate_public_ip_address: true,
         }
 

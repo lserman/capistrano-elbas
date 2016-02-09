@@ -61,7 +61,7 @@ module Elbas
         unless aws_key_pair.nil?
           _options.merge key_pair: aws_key_pair
         end
-        debug "autoscaling key_pair #{key_pair}"
+        debug "autoscaling key_pair #{aws_key_pair}"
         debug "autoscaling launch_configurations_options #{_options}"
         _options
       end

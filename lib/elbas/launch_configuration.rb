@@ -31,7 +31,7 @@ module Elbas
     private
 
       def name
-        timestamp "ELBAS-#{environment}-LC"
+        timestamp "ELBAS-#{environment}-#{autoscale_group_name}-LC"
       end
 
       def instance_size
@@ -53,7 +53,7 @@ module Elbas
       end
 
       def deployed_with_elbas?(lc)
-        lc.name =~ /ELBAS-#{environment}/
+        lc.name =~ /ELBAS-#{environment}-#{autoscale_group_name}/
       end
 
       def trash

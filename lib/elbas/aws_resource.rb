@@ -32,7 +32,7 @@ module Elbas
     private
 
       def deployed_with_elbas?(resource)
-        resource.tags['Deployed-with'] == 'ELBAS'
+        resource.tags['Deployed-with'] == 'ELBAS' && resource.tags['Autoscale-group-name'] == autoscale_group_name
       end
 
   end

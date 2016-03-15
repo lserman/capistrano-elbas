@@ -29,7 +29,7 @@ module Elbas
     private
 
       def name
-        timestamp "#{environment}-AMI"
+        timestamp "ELBAS-#{environment}-#{$server_role}-AMI"
       end
 
       def trash

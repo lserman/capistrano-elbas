@@ -19,11 +19,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rake", "~> 10"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "webmock"
 
-  spec.add_dependency 'aws-sdk-v1', '~> 1'
+  spec.add_dependency 'aws-sdk', '~> 1'
   spec.add_dependency 'capistrano', '> 3.0.0'
   spec.add_dependency 'activesupport', '>= 4.0.0'
 end

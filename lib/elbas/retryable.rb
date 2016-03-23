@@ -1,6 +1,5 @@
 module Elbas
   module Retryable
-
     def with_retry(max: fetch(:elbas_retry_max, 3), delay: fetch(:elbas_retry_delay, 5))
       tries ||= 0
       tries += 1
@@ -13,6 +12,5 @@ module Elbas
         retry
       end
     end
-
   end
 end

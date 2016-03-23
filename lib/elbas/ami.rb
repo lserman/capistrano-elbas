@@ -7,6 +7,7 @@ module Elbas
       ami.cleanup do
         ami.save
         ami.tag 'Deployed-with' => 'ELBAS'
+        ami.tag 'ELBAS-Deploy-group' => ami.autoscale_group_name
         yield ami
       end
     end
@@ -27,7 +28,6 @@ module Elbas
     end
 
     private
-
       def name
         timestamp "#{environment}-AMI"
       end
@@ -37,6 +37,5 @@ module Elbas
           deployed_with_elbas? ami
         end
       end
-
   end
 end

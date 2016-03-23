@@ -15,7 +15,6 @@ module Elbas
           _credentials
         end
       end
-
     end
   end
 end

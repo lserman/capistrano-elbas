@@ -15,8 +15,7 @@ module Elbas
       self
     end
 
-    protected
-
+    private
       def base_ec2_instance
         @_base_ec2_instance ||= autoscale_group.ec2_instances.filter('instance-state-name', 'running').first
       end
@@ -29,11 +28,9 @@ module Elbas
         "#{str}-#{Time.now.to_i}"
       end
 
-    private
-
       def deployed_with_elbas?(resource)
-        resource.tags['Deployed-with'] == 'ELBAS'
+        resource.tags['Deployed-with'] == 'ELBAS' &&
+          resource.tags['ELBAS-Deploy-group'] == autoscale_group_name
       end
-
   end
 end

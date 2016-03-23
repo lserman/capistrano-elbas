@@ -33,6 +33,10 @@ describe 'ELBAS' do
     it 'tags the new AMI with Deployed-with=ELBAS' do
       expect(WebMock).to have_requested(:post, /ec2.(.*).amazonaws.com\/\z/).with(body: /Action=CreateTags&ResourceId.1=ami-4fa54026&Tag.1.Key=Deployed-with&Tag.1.Value=ELBAS/)
     end
+
+    it 'tags the new AMI with ELBAS-Deploy-group=<autoscale group name>' do
+      expect(WebMock).to have_requested(:post, /ec2.(.*).amazonaws.com\/\z/).with(body: /Action=CreateTags&ResourceId.1=ami-4fa54026&Tag.1.Key=ELBAS-Deploy-group&Tag.1.Value=production/)
+    end
   end
 
   describe 'Launch configuration creation & cleanup' do
@@ -48,12 +52,12 @@ describe 'ELBAS' do
     end
 
     it 'deletes any LCs with name =~ ELBAS-production' do
-      expect(WebMock).to have_requested(:post, /autoscaling.(.*).amazonaws.com\/\z/).with(body: /Action=DeleteLaunchConfiguration&LaunchConfigurationName=ELBAS-production-LC-1234567890/)
+      expect(WebMock).to have_requested(:post, /autoscaling.(.*).amazonaws.com\/\z/).with(body: /Action=DeleteLaunchConfiguration&LaunchConfigurationName=ELBAS-production-production-LC-1234567890/)
     end
 
     it 'attaches the LC to the autoscale group' do
       launch_configuration.attach_to_autoscale_group!
-      expect(WebMock).to have_requested(:post, /autoscaling.(.*).amazonaws.com\/\z/).with(body: /Action=UpdateAutoScalingGroup&AutoScalingGroupName=production&LaunchConfigurationName=ELBAS-production-LC-\d{10,}/)
+      expect(WebMock).to have_requested(:post, /autoscaling.(.*).amazonaws.com\/\z/).with(body: /Action=UpdateAutoScalingGroup&AutoScalingGroupName=production&LaunchConfigurationName=ELBAS-production-production-LC-\d{10,}/)
     end
   end
 

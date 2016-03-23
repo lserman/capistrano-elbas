@@ -7,5 +7,11 @@
          <key>Deployed-with</key>
          <value>ELBAS</value>
       </item>
+      <item>
+         <resourceId>ami-1a2b3c4d</resourceId>
+         <resourceType>image</resourceType>
+         <key>ELBAS-Deploy-group</key>
+         <value>production</value>
+      </item>
     </tagSet>
 </DescribeTagsResponse>

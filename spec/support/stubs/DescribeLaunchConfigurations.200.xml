@@ -7,7 +7,7 @@
         <PlacementTenancy>dedicated</PlacementTenancy>
         <CreatedTime>2013-01-21T23:04:42.200Z</CreatedTime>
         <KernelId/>
-        <LaunchConfigurationName>ELBAS-production-LC-1234567890</LaunchConfigurationName>
+        <LaunchConfigurationName>ELBAS-production-production-LC-1234567890</LaunchConfigurationName>
         <UserData/>
         <InstanceType>m1.small</InstanceType>
         <LaunchConfigurationARN>arn:aws:autoscaling:us-east-1:803981987763:launchConfiguration:

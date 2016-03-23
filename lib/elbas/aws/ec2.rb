@@ -8,7 +8,6 @@ module Elbas
       def ec2
         @_ec2 ||= ::AWS::EC2.new(credentials)
       end
-
     end
   end
 end

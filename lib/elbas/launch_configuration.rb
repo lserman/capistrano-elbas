@@ -17,7 +17,7 @@ module Elbas
     end
 
     def attach_to_autoscale_group!
-      info "Attaching Launch Configuration to AutoScale Group"
+      info 'Attaching Launch Configuration to AutoScale Group'
       autoscale_group.update(launch_configuration: aws_counterpart)
     end
 
@@ -29,9 +29,8 @@ module Elbas
     end
 
     private
-
       def name
-        timestamp "ELBAS-#{environment}-LC"
+        timestamp "ELBAS-#{environment}-#{autoscale_group_name}-LC"
       end
 
       def instance_size
@@ -39,21 +38,21 @@ module Elbas
       end
 
       def create_options
-        _options = {
+        options = {
           security_groups: base_ec2_instance.security_groups.to_a,
           detailed_instance_monitoring: fetch(:aws_launch_configuration_detailed_instance_monitoring, true),
-          associate_public_ip_address: fetch(:aws_launch_configuration_associate_public_ip, true),
+          associate_public_ip_address: fetch(:aws_launch_configuration_associate_public_ip, true)
         }
 
         if user_data = fetch(:aws_launch_configuration_user_data, nil)
-          _options.merge user_data: user_data
+          options.merge user_data: user_data
         end
 
-        _options
+        options
       end
 
       def deployed_with_elbas?(lc)
-        lc.name =~ /ELBAS-#{environment}/
+        lc.name.include? "ELBAS-#{environment}-#{autoscale_group_name}-LC"
       end
 
       def trash
@@ -61,6 +60,5 @@ module Elbas
           deployed_with_elbas? lc
         end
       end
-
   end
 end

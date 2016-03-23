@@ -11,4 +11,4 @@ deploy:
     repo: lserman/capistrano-elbas
     branch: master
   api_key:
-    secure: l7oX8UC0qhvbTQioFOaRy6sx3T1+JKr2MxdcEvgqZDg6hx2l2WhnZemmm0FtvjKBWC65Sk/ygT0PmeekTVzQIcK8E6Bz/mtTTbOfD/wxdOzbJfOXGYKy8amCNvPEQ+DLIkMY0hxx23t7YLj/MIu53vKCAOEwKMKMylUZrYizZWk=
+    secure: ARM2JGEokm/TaJvIIwGgdL4s0QuMlwdVXzwtE4TwiqiSQO2yp8Eet9B0o55O3fITV2Z9UGUBF/9ymoKD2S4m/iGOARosj8q+gmgE/84fdF3glAqTtkCPsUZH8fseAH41e4XYwWkoRhwbxHBVhLn5rVGO4oJKWtFGnddacDBolFQ=

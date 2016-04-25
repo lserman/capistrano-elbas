@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-v1'
 require 'capistrano/dsl'
 
 load File.expand_path("../tasks/elbas.rake", __FILE__)

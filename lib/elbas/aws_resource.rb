@@ -17,7 +17,10 @@ module Elbas
 
     private
       def base_ec2_instance
-        @_base_ec2_instance ||= autoscale_group.ec2_instances.filter('instance-state-name', 'running').first
+        protected_instance = fetch(:aws_autoscale_protected_instance, nil)
+        instances = autoscale_group.ec2_instances.filter('instance-state-name', 'running')
+        instances = instances.select { |ins| ins.id != protected_instance } if protected_instance.present?
+        @_base_ec2_instance ||= instances.first
       end
 
       def environment

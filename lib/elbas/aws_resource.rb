@@ -17,9 +17,9 @@ module Elbas
 
     private
       def base_ec2_instance
-        protected_instance = fetch(:aws_autoscale_protected_instance, nil)
         instances = autoscale_group.ec2_instances.filter('instance-state-name', 'running')
-        instances = instances.select { |ins| ins.id != protected_instance } if protected_instance.present?
+        protected_instances = fetch(:aws_autoscale_protected_instances, [])
+        instances = instances.select { |ins| !protected_instances.include?(ins.id) } unless protected_instances.empty?
         @_base_ec2_instance ||= instances.first
       end
 

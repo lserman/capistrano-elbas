@@ -30,7 +30,7 @@ set :aws_region,            ENV['AWS_REGION']
 
 set :aws_no_reboot_on_create_ami, true
 set :aws_autoscale_instance_size, 'm1.small'
-set :aws_autoscale_protected_instance, 'i-9e2a2f4c'
+set :aws_autoscale_protected_instances, ['i-9e2a2f4c']
 
 set :aws_launch_configuration_detailed_instance_monitoring, true
 set :aws_launch_configuration_associate_public_ip, true

@@ -9,6 +9,12 @@ def autoscale(groupname, *args)
 
   autoscale_group   = autoscaling.groups[groupname]
   running_instances = autoscale_group.ec2_instances.filter('instance-state-name', 'running')
+  protected_instances = fetch(:aws_autoscale_protected_instances, [])
+  if protected_instances.empty?
+    base_instance = running_instances.first
+  else
+    base_instance = running_instances.select { |ins| !protected_instances.include?(ins.id) }.first
+  end
 
   set :aws_autoscale_group, groupname
 
@@ -18,9 +24,10 @@ def autoscale(groupname, *args)
     server(hostname, *args)
   end
 
-  if running_instances.count > 0
-    after('deploy', 'elbas:scale')
-  else
+
+  if base_instance.nil?
     p "ELBAS: AMI could not be created because no running instances were found. Is your autoscale group name correct?"
+  else
+    after('deploy', 'elbas:scale')
   end
 end

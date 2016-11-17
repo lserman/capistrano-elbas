@@ -24,6 +24,7 @@ module Elbas
       images.each do |i|
         info "Deleting old AMI: #{i.id}"
         i.delete
+        delete_snapshots_attached_to i
       end
     end
 
@@ -35,6 +36,13 @@ module Elbas
       def trash
         ec2.images.with_owner('self').to_a.select do |ami|
           deployed_with_elbas? ami
+        end
+      end
+
+      def delete_snapshots_attached_to(image)
+        image.block_device_mappings.each do |_, values|
+          snapshot = ec2.snapshots[values[:snapshot_id]]
+          snapshot.delete if snapshot.exists?
         end
       end
   end

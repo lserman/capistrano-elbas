@@ -3,16 +3,18 @@ describe 'ELBAS' do
   before do
     allow_any_instance_of(Elbas::AWSResource).to receive(:autoscale_group_name) { 'production' }
     webmock :get, /security-credentials/ => 'security-credentials.200.json'
-    webmock(:post, /ec2.(.*).amazonaws.com\/\z/ => 'DescribeImages.200.xml') { Hash[body: /Action=DescribeImages/] }
-    webmock(:post, /ec2.(.*).amazonaws.com\/\z/ => 'DescribeTags.200.xml') { Hash[body: /Action=DescribeTags/] }
-    webmock(:post, /ec2.(.*).amazonaws.com\/\z/ => 'DescribeInstances.200.xml') { Hash[body: /Action=DescribeInstances/] }
-    webmock(:post, /ec2.(.*).amazonaws.com\/\z/ => 'CreateImage.200.xml') { Hash[body: /Action=CreateImage/] }
-    webmock(:post, /ec2.(.*).amazonaws.com\/\z/ => 'DeregisterImage.200.xml') { Hash[body: /Action=DeregisterImage/] }
-    webmock(:post, /ec2.(.*).amazonaws.com\/\z/ => 'CreateTags.200.xml') { Hash[body: /Action=CreateTags/] }
-    webmock(:post, /autoscaling.(.*).amazonaws.com\/\z/ => 'DescribeLaunchConfigurations.200.xml') { Hash[body: /Action=DescribeLaunchConfigurations/] }
-    webmock(:post, /autoscaling.(.*).amazonaws.com\/\z/ => 'CreateLaunchConfiguration.200.xml') { Hash[body: /Action=CreateLaunchConfiguration/] }
-    webmock(:post, /autoscaling.(.*).amazonaws.com\/\z/ => 'DeleteLaunchConfiguration.200.xml') { Hash[body: /Action=DeleteLaunchConfiguration/] }
-    webmock(:post, /autoscaling.(.*).amazonaws.com\/\z/ => 'UpdateAutoScalingGroup.200.xml') { Hash[body: /Action=UpdateAutoScalingGroup/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeImages.200.xml') { Hash[body: /Action=DescribeImages/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeTags.200.xml') { Hash[body: /Action=DescribeTags/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeInstances.200.xml') { Hash[body: /Action=DescribeInstances/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'CreateImage.200.xml') { Hash[body: /Action=CreateImage/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DeregisterImage.200.xml') { Hash[body: /Action=DeregisterImage/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'CreateTags.200.xml') { Hash[body: /Action=CreateTags/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeSnapshots.200.xml') { Hash[body: /Action=DescribeSnapshots/] }
+    webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DeleteSnapshot.200.xml') { Hash[body: /Action=DeleteSnapshot/] }
+    webmock(:post, %r{autoscaling.(.*).amazonaws.com\/\z} => 'DescribeLaunchConfigurations.200.xml') { Hash[body: /Action=DescribeLaunchConfigurations/] }
+    webmock(:post, %r{autoscaling.(.*).amazonaws.com\/\z} => 'CreateLaunchConfiguration.200.xml') { Hash[body: /Action=CreateLaunchConfiguration/] }
+    webmock(:post, %r{autoscaling.(.*).amazonaws.com\/\z} => 'DeleteLaunchConfiguration.200.xml') { Hash[body: /Action=DeleteLaunchConfiguration/] }
+    webmock(:post, %r{autoscaling.(.*).amazonaws.com\/\z} => 'UpdateAutoScalingGroup.200.xml') { Hash[body: /Action=UpdateAutoScalingGroup/] }
   end
 
   let!(:ami) do
@@ -28,6 +30,10 @@ describe 'ELBAS' do
 
     it 'deletes any AMIs tagged with Deployed-with=ELBAS' do
       expect(WebMock).to have_requested(:post, /ec2.(.*).amazonaws.com\/\z/).with(body: /Action=DeregisterImage&ImageId=ami-1a2b3c4d/)
+    end
+
+    it 'deletes snapshots that are associated with the AMI' do
+      expect(WebMock).to have_requested(:post, /ec2.(.*).amazonaws.com\/\z/).with(body: /Action=DeleteSnapshot&SnapshotId=snap-1a2b3c4d/)
     end
 
     it 'tags the new AMI with Deployed-with=ELBAS' do
@@ -60,5 +66,4 @@ describe 'ELBAS' do
       expect(WebMock).to have_requested(:post, /autoscaling.(.*).amazonaws.com\/\z/).with(body: /Action=UpdateAutoScalingGroup&AutoScalingGroupName=production&LaunchConfigurationName=ELBAS-production-production-LC-\d{10,}/)
     end
   end
-
 end

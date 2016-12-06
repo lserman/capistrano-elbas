@@ -23,8 +23,13 @@ module Elbas
     def destroy(images = [])
       images.each do |i|
         info "Deleting old AMI: #{i.id}"
-        i.delete
-        delete_snapshots_attached_to i
+
+        begin
+          i.delete
+          delete_snapshots_attached_to i
+        rescue AWS::Core::Resource::NotFound
+          warn "Could not find old AMI '#{i.id}' for deletion"
+        end
       end
     end
 

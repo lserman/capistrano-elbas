@@ -48,6 +48,7 @@ module Elbas
 
       def delete_snapshots(snapshots)
         snapshots.each do |snapshot|
+          info "Deleting snapshot: #{snapshot.id}"
           snapshot.delete if snapshot.exists?
         end
       end

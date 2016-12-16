@@ -27,7 +27,7 @@ module Elbas
         begin
           i.delete
           delete_snapshots_attached_to i
-        rescue AWS::Core::Resource::NotFound
+        rescue ::AWS::Core::Resource::NotFound
           warn "Could not find old AMI '#{i.id}' for deletion"
         end
       end

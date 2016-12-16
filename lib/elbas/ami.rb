@@ -23,13 +23,8 @@ module Elbas
     def destroy(images = [])
       images.each do |i|
         info "Deleting old AMI: #{i.id}"
-
-        begin
-          i.delete
-          delete_snapshots_attached_to i
-        rescue => error
-          warn "An issue was encountered when attempting to remove the old AMI '#{i.id}': #{error}"
-        end
+        delete_snapshots_attached_to i
+        i.delete
       end
     end
 

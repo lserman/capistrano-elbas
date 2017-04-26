@@ -1,4 +1,4 @@
-require 'aws-sdk-v1'
+require 'aws-sdk'
 require 'capistrano/all'
 require 'active_support/concern'
 

@@ -1,14 +1,15 @@
 module Elbas
+  # Provides basic AWS resource methods
   class AWSResource
     include Capistrano::DSL
-    include Elbas::AWS::AutoScaling
-    include Elbas::AWS::EC2
+    include Elbas::Aws::AutoScaling
+    include Elbas::Aws::EC2
     include Elbas::Retryable
     include Logger
 
     attr_reader :aws_counterpart
 
-    def cleanup(&block)
+    def cleanup(&_block)
       items = trash || []
       yield
       destroy items
@@ -16,21 +17,23 @@ module Elbas
     end
 
     private
-      def base_ec2_instance
-        @_base_ec2_instance ||= autoscale_group.ec2_instances.filter('instance-state-name', 'running').first
-      end
 
-      def environment
-        fetch(:rails_env, 'production')
-      end
+    def base_ec2_instance
+      @_base_ec2_instance ||= autoscaling_group.instances[0]
+    end
 
-      def timestamp(str)
-        "#{str}-#{Time.now.to_i}"
-      end
+    def environment
+      fetch(:rails_env, 'production')
+    end
 
-      def deployed_with_elbas?(resource)
-        resource.tags['Deployed-with'] == 'ELBAS' &&
-          resource.tags['ELBAS-Deploy-group'] == autoscale_group_name
-      end
+    def timestamp(str)
+      "#{str}-#{Time.now.to_i}"
+    end
+
+    def deployed_with_elbas?(resource)
+      return false if resource.tags.empty?
+      resource.tags.any? { |k| k.key == 'Deployed-with' && k.value == 'ELBAS' } &&
+        resource.tags.any? { |k| k.key == 'ELBAS-Deploy-group' && k.value == autoscaling_group_name }
+    end
   end
 end

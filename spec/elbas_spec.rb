@@ -1,7 +1,7 @@
 describe 'ELBAS' do
 
   before do
-    allow_any_instance_of(Elbas::AWSResource).to receive(:autoscale_group_name) { 'production' }
+    allow_any_instance_of(Elbas::AWSResource).to receive(:autoscaling_group_name) { 'production' }
     webmock :get, /security-credentials/ => 'security-credentials.200.json'
     webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeImages.200.xml') { Hash[body: /Action=DescribeImages/] }
     webmock(:post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeTags.200.xml') { Hash[body: /Action=DescribeTags/] }

@@ -1,5 +1,5 @@
 module Elbas
-  module AWS
+  module Aws
     module Credentials
       extend ActiveSupport::Concern
       include Capistrano::DSL

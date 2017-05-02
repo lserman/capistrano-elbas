@@ -30,4 +30,7 @@ def autoscale(groupname, *args)
     p 'ELBAS: AMI could not be created because no running instances were found.\
       Is your autoscale group name correct?'
   end
+
+  reset_autoscaling_objects
+  reset_ec2_objects
 end

@@ -45,6 +45,24 @@ hostname:
 autoscale 'production', user: 'apps', roles: [:app, :web, :db]
 ```
 
+If you have multiple autoscaling groups to deploy to, specify each of them:
+
+```ruby
+autoscale 'asg-app', user: 'apps', roles: [:app, :web]
+autoscale 'asg-db', user: 'apps', roles: [:db]
+```
+
+Similarly, if you are deploying to multiple regions:
+
+```ruby
+regions = %w(us-east-1 eu-west-1)
+
+regions.each do |region|
+  set :aws_region, region
+  autoscale 'production', user: 'apps', roles: [:app, :web, :db]
+end
+```
+
 That's it! Run `cap production deploy`. ELBAS will print the following log statements during your
 deployment:
 

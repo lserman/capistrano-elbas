@@ -5,12 +5,19 @@ module Elbas
       extend ActiveSupport::Concern
       include Elbas::Aws::Credentials
       include Capistrano::DSL
-      def ec2_client
-        @_ec2_client ||= ::Aws::EC2::Client.new(credentials)
-      end
 
       def ec2_resource
         @_ec2_resource ||= ::Aws::EC2::Resource.new(client: ec2_client)
+      end
+
+      def reset_ec2_objects
+        @_ec2_resource = nil
+      end
+
+      private
+
+      def ec2_client
+        ::Aws::EC2::Client.new(credentials)
       end
     end
   end

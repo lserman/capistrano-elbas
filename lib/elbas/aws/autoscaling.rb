@@ -21,6 +21,12 @@ module Elbas
       def autoscaling_group_name
         fetch(:aws_autoscale_group)
       end
+
+      def reset_autoscaling_objects
+        @_autoscaling_client = nil
+        @_autoscaling_resource = nil
+        @_autoscaling_group = nil
+      end
     end
   end
 end

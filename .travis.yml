@@ -12,3 +12,5 @@ deploy:
     branch: master
   api_key:
     secure: gRiZBVBq+/AtMoOeSsMlnCLawQVzN/SVXyOC7+5gni8iKPGDpXL+CBrUv410WStBmA2c4SYn9lNmeLOea31TOA0yIMnjfjA36jPNKzKWThRb9NuUzV8ySGqBcqp1YhvZta46Jv+d3HovGgSJ0aw5tCSfB+gPdwNvkFvqe+zIy3Y=
+  env:
+    - AWS_REGION: us-west-2

@@ -9,7 +9,7 @@ module Elbas
           _credentials = {
             access_key_id:     fetch(:aws_access_key_id,     ENV['AWS_ACCESS_KEY_ID']),
             secret_access_key: fetch(:aws_secret_access_key, ENV['AWS_SECRET_ACCESS_KEY']),
-            region:            fetch(:aws_region,            ENV['AWS_REGION'])
+            region:            fetch(:aws_region,            'us-west-2')
           }
 
           _credentials.merge! region: fetch(:aws_region) if fetch(:aws_region)

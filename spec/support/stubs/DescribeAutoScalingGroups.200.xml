@@ -1,0 +1,21 @@
+<DescribeAutoScalingGroupsResponse xmlns="http://autoscaling.amazonaws.com/doc/2011-01-01/">
+  <ResponseMetadata>
+    <RequestId>7c6e177f-f082-11e1-ac58-3714bEXAMPLE</RequestId>
+  </ResponseMetadata>
+  <DescribeAutoScalingGroupsResult>
+    <AutoScalingGroups>
+      <member>
+        <AutoScalingGroupName>production</AutoScalingGroupName>
+        <Instances>
+          <member>
+            <LaunchConfigurationName>ELBAS-production-production-LC-1234567890</LaunchConfigurationName>
+            <LifecycleState>InService</LifecycleState>
+            <InstanceId>i-1a2b3c4d</InstanceId>
+            <ProtectedFromScaleIn>false</ProtectedFromScaleIn>
+            <AvailabilityZone>us-west-2a</AvailabilityZone>
+          </member>
+        </Instances>
+      </member>
+    </AutoScalingGroups>
+  </DescribeAutoScalingGroupsResult>
+</DescribeAutoScalingGroupsResponse>

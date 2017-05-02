@@ -1,4 +1,4 @@
-<DescribeSnapshotsResponse xmlns="http://ec2.amazonaws.com/doc/2016-09-15/">
+<DescribeSnapshotsResponse xmlns="http://ec2.amazonaws.com/doc/2016-11-15/">
    <requestId>59dbff89-35bd-4eac-99ed-be587EXAMPLE</requestId>
    <snapshotSet>
       <item>
@@ -12,7 +12,16 @@
          <description>Daily Backup</description>
          <encrypted>true</encrypted>
          <kmsKeyId>arn:aws:kms:us-east-1:123456789012:key/6876fb1b-example</kmsKeyId>
-         <tagSet/>
+         <tagSet>
+            <item>
+               <key>Deployed-with</key>
+               <value>ELBAS</value>
+            </item>
+            <item>
+               <key>ELBAS-Deploy-group</key>
+               <value>production</value>
+            </item>
+          </tagSet>
       </item>
    </snapshotSet>
 </DescribeSnapshotsResponse>

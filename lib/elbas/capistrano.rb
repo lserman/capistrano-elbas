@@ -1,6 +1,5 @@
 require 'aws-sdk'
 require 'capistrano/dsl'
-require 'byebug'
 
 load File.expand_path('../tasks/elbas.rake', __FILE__)
 

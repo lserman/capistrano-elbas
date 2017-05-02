@@ -1,4 +1,4 @@
-<DescribeImagesResponse xmlns="http://ec2.amazonaws.com/doc/2014-10-01/">
+<DescribeImagesResponse xmlns="http://ec2.amazonaws.com/doc/2016-11-15/">
   <requestId>59dbff89-35bd-4eac-99ed-be587EXAMPLE</requestId>
   <imagesSet>
     <item>
@@ -11,7 +11,7 @@
       <imageType>machine</imageType>
       <kernelId>aki-1a2b3c4d</kernelId>
       <ramdiskId>ari-1a2b3c4d</ramdiskId>
-      <imageOwnerAlias>amazon</imageOwnerAlias>
+      <imageOwnerAlias>self</imageOwnerAlias>
       <name>getting-started</name>
       <description>Image Description</description>
       <rootDeviceType>ebs</rootDeviceType>
@@ -28,7 +28,16 @@
         </item>
       </blockDeviceMapping>
       <virtualizationType>paravirtual</virtualizationType>
-      <tagSet/>
+      <tagSet>
+         <item>
+            <key>Deployed-with</key>
+            <value>ELBAS</value>
+         </item>
+         <item>
+            <key>ELBAS-Deploy-group</key>
+            <value>production</value>
+         </item>
+       </tagSet>
       <hypervisor>xen</hypervisor>
     </item>
   </imagesSet>

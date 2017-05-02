@@ -1,4 +1,3 @@
-require 'byebug'
 module Elbas
   # Extend AWS Resource class to include AMI methods
   class AMI < AWSResource
@@ -45,7 +44,6 @@ module Elbas
     end
 
     def snapshots_attached_to(image)
-      # image.block_device_mappings.map(&:ebs).compact.each do |_, values|
       ids = image.block_device_mappings.map(&:ebs).compact.map(&:snapshot_id)
       ec2_resource.snapshots(snapshot_ids: ids)
     end

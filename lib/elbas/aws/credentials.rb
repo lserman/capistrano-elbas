@@ -7,8 +7,9 @@ module Elbas
       def credentials
         @_credentials ||= begin
           _credentials = {
-            access_key_id: fetch(:aws_access_key_id, ENV['AWS_ACCESS_KEY_ID']),
-            secret_access_key: fetch(:aws_secret_access_key, ENV['AWS_SECRET_ACCESS_KEY'])
+            access_key_id:     fetch(:aws_access_key_id,     ENV['AWS_ACCESS_KEY_ID']),
+            secret_access_key: fetch(:aws_secret_access_key, ENV['AWS_SECRET_ACCESS_KEY']),
+            aws_region:        fetch(:aws_region,            ENV['AWS_REGION'])
           }
 
           _credentials.merge! region: fetch(:aws_region) if fetch(:aws_region)

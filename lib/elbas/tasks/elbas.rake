@@ -13,9 +13,9 @@ namespace :elbas do
       regions[region].each do |asg|
         set :aws_autoscale_group, asg
         Elbas::AMI.create do |ami|
-          p "ELBAS: Created AMI: #{ami.aws_counterpart.id} from region #{region} in ASG #{asg}"
+          puts "ELBAS: Created AMI: #{ami.aws_counterpart.id} from region #{region} in ASG #{asg}"
           Elbas::LaunchConfiguration.create(ami) do |lc|
-            p "ELBAS: Created Launch Configuration: #{lc.aws_counterpart.name} from region #{region} in ASG #{asg}"
+            puts "ELBAS: Created Launch Configuration: #{lc.aws_counterpart.name} from region #{region} in ASG #{asg}"
             lc.attach_to_autoscale_group!
           end # LC
         end # AMI

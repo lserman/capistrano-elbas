@@ -19,11 +19,11 @@ def autoscale(groupname, *args)
 
   asg_instances.each do |asg_instance|
     if asg_instance.health_status != 'Healthy'
-      p "ELBAS: Skipping unhealthy instance #{instance.id}"
+      puts "ELBAS: Skipping unhealthy instance #{instance.id}"
     else
       ec2_instance = ec2_resource.instance(asg_instance.id)
       hostname = ec2_instance.private_ip_address
-      p "ELBAS: Adding server: #{hostname}"
+      puts "ELBAS: Adding server: #{hostname}"
       server(hostname, *args)
     end
   end
@@ -31,7 +31,7 @@ def autoscale(groupname, *args)
   if asg_instances.count.positive?
     after('deploy', 'elbas:scale')
   else
-    p 'ELBAS: AMI could not be created because no running instances were found.\
+    puts 'ELBAS: AMI could not be created because no running instances were found.\
       Is your autoscale group name correct?'
   end
 

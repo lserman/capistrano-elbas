@@ -10,8 +10,7 @@ module Elbas
     end
 
     def save(ami)
-      info "Creating an EC2 Launch Configuration for AMI: \
-           #{ami.aws_counterpart.id}"
+      info "Creating an EC2 Launch Configuration for AMI: #{ami.aws_counterpart.id}"
       ec2_instance = ec2_resource.instance(base_ec2_instance.id)
       with_retry do
         @aws_counterpart = autoscaling_resource.create_launch_configuration(
@@ -30,8 +29,7 @@ module Elbas
     end
 
     def attach_to_autoscale_group!
-      info "Attaching Launch Configuration #{aws_counterpart.name} \
-        to AutoScaling Group #{autoscaling_group.name}"
+      info "Attaching Launch Configuration #{aws_counterpart.name} to AutoScaling Group #{autoscaling_group.name}"
       autoscaling_group.update(
         launch_configuration_name: aws_counterpart.name
       )

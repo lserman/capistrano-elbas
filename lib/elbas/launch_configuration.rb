@@ -45,7 +45,7 @@ module Elbas
         }
 
         if user_data = fetch(:aws_launch_configuration_user_data, nil)
-          options.merge user_data: user_data
+          options.merge! user_data: user_data
         end
 
         options

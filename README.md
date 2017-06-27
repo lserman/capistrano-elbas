@@ -33,6 +33,11 @@ set :aws_autoscale_instance_size, 'm1.small'
 
 set :aws_launch_configuration_detailed_instance_monitoring, true
 set :aws_launch_configuration_associate_public_ip, true
+set :aws_launch_configuration_key_name, "my-key" 
+set :aws_launch_configuration_ramdisk_id, nil 
+set :aws_launch_configuration_spot_price, nil 
+set :aws_launch_configuration_kernel_id, nil
+set :aws_launch_configuration_iam_instance_profile, "my_iam_profile_with_ssm_role"
 set :aws_launch_configuration_user_data, <<-EOF
 #!/bin/bash
 whoami

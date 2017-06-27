@@ -8,6 +8,7 @@ module Elbas
         ami.save
         ami.tag 'Deployed-with' => 'ELBAS'
         ami.tag 'ELBAS-Deploy-group' => ami.autoscale_group_name
+        ami.tag 'Name' => "#{autoscale_group_name}-ami"
         yield ami
       end
     end
@@ -18,6 +19,7 @@ module Elbas
         name: name,
         instance_id: base_ec2_instance.id,
         no_reboot: fetch(:aws_no_reboot_on_create_ami, true)
+      @aws_counterpart
     end
 
     def destroy(images = [])
@@ -31,7 +33,7 @@ module Elbas
 
     private
       def name
-        timestamp "#{environment}-AMI"
+        timestamp "#{environment}-#{autoscale_group_name}-AMI"
       end
 
       def trash

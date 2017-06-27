@@ -38,11 +38,36 @@ module Elbas
       end
 
       def create_options
-        options = {
+        existing_lc = trash.first
+
+        unless existing_lc.nil?
+          options = {
+            key_pair: existing_lc.key_name || fetch(:aws_launch_configuration_key_name),
+            ramdisk_id: existing_lc.ramdisk_id || fetch(:aws_launch_configuration_ramdisk_id),
+            spot_price: existing_lc.spot_price || fetch(:aws_launch_configuration_spot_price),
+            kernel_id: existing_lc.kernel_id || fetch(:aws_launch_configuration_kernel_id),
+            iam_instance_profile: existing_lc.iam_instance_profile || fetch(:aws_launch_configuration_iam_instance_profile),
+          }
+        else
+          options = {
+            key_pair: fetch(:aws_launch_configuration_key_name),
+            ramdisk_id: fetch(:aws_launch_configuration_ramdisk_id),
+            spot_price: fetch(:aws_launch_configuration_spot_price),
+            kernel_id: fetch(:aws_launch_configuration_kernel_id),
+            iam_instance_profile: fetch(:aws_launch_configuration_iam_instance_profile),
+          }
+        end
+
+        options.delete :ramdisk_id if options[:ramdisk_id].nil?
+        options.delete :spot_price if options[:spot_price].nil?
+        options.delete :kernel_id if options[:kernel_id].nil?
+        options.delete :iam_instance_profile if options[:iam_instance_profile].nil?
+
+        options = options.merge({
           security_groups: base_ec2_instance.security_groups.to_a,
           detailed_instance_monitoring: fetch(:aws_launch_configuration_detailed_instance_monitoring, true),
           associate_public_ip_address: fetch(:aws_launch_configuration_associate_public_ip, true)
-        }
+        })
 
         if user_data = fetch(:aws_launch_configuration_user_data, nil)
           options.merge! user_data: user_data

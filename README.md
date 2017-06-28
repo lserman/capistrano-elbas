@@ -67,3 +67,15 @@ deployment:
 "ELBAS: Deleting old launch configuration: elbas-lc-production-123456"
 "ELBAS: Deleting old image: ami-999999"
 ```
+
+## Rake tasks
+
+### Listing instances
+```
+bundle exec cap production elbas:list
+```
+
+### Updating ASG 
+```
+bundle exec cap production elbas:scale
+```

@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "elbas"
   spec.version       = Elbas::VERSION
   spec.authors       = ["Logan Serman"]
-  spec.email         = ["logan.serman@metova.com"]
+  spec.email         = ["loganserman@gmail.com"]
   spec.summary       = 'Capistrano plugin for deploying to AWS AutoScale Groups.'
-  spec.description   = "#{spec.summary} Deploys to all instances in a group, creates a fresh AMI post-deploy, and attaches the AMI to your AutoScale Group."
-  spec.homepage      = "http://github.com/metova/elbas"
+  spec.description   = spec.summary
+  spec.homepage      = "http://github.com/lserman/capistrano-elbas"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

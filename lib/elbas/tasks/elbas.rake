@@ -16,7 +16,6 @@ namespace :elbas do
     info "Updated launch template, new default version = #{launch_template.version}"
 
     info "Cleaning up old AMIs..."
-
     ami.ancestors.each do |ancestor|
       info "Deleting old AMI: #{ancestor.id}"
       ancestor.delete

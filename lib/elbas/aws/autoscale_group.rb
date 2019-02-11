@@ -13,7 +13,7 @@ module Elbas
       end
 
       def instances
-        InstanceCollection.new(instance_ids).running
+        InstanceCollection.new instance_ids
       end
 
       def launch_template

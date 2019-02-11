@@ -1,6 +1,8 @@
 module Elbas
   module AWS
     class InstanceCollection < Base
+      include Enumerable
+
       attr_reader :instances
 
       def initialize(ids)
@@ -12,6 +14,10 @@ module Elbas
 
       def running
         instances.select(&:running?)
+      end
+
+      def each(&block)
+        instances.each(&block)
       end
 
       private

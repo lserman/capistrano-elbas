@@ -14,9 +14,13 @@ module Elbas
           launch_template_data: { image_id: ami.id },
           launch_template_id: self.id,
           source_version: self.version
-        })
+        }).launch_template_version
 
-        self.class.new id, name, latest.launch_template_version
+        self.class.new(
+          latest&.launch_template_id,
+          latest&.launch_template_name,
+          latest&.version_number
+        )
       end
 
       private

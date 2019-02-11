@@ -27,9 +27,9 @@ describe Elbas::AWS::AutoscaleGroup do
   end
 
   describe '#instances' do
-    it 'includes only running instances' do
-      expect(subject.instances.size).to eq 1
-      expect(subject.instances[0].id).to eq 'i-1234567890'
+    it 'returns an instance collection with all instances' do
+      instances = subject.instances
+      expect(instances.count).to eq 2
     end
   end
 

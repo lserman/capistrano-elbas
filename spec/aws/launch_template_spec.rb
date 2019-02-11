@@ -26,7 +26,6 @@ describe Elbas::AWS::LaunchTemplate do
       expect(WebMock)
         .to have_requested(:post, /ec2/)
         .with(body: %r{Action=CreateLaunchTemplateVersion})
-
     end
 
     it 'creates a new launch template from the given AMI' do
@@ -41,6 +40,13 @@ describe Elbas::AWS::LaunchTemplate do
       expect(WebMock)
         .to have_requested(:post, /ec2/)
         .with(body: %r{LaunchTemplateId=test-lt&SourceVersion=1})
+    end
+
+    it 'returns a new launch template' do
+      launch_template = subject.update double(:ami, id: 'ami-123')
+      expect(launch_template.id).to eq 'lt-1234567890'
+      expect(launch_template.name).to eq 'elbas-test'
+      expect(launch_template.version).to eq 123
     end
   end
 end

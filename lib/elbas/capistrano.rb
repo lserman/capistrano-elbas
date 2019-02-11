@@ -5,22 +5,27 @@ load File.expand_path("../tasks/elbas.rake", __FILE__)
 
 def autoscale(groupname, *args)
   include Capistrano::DSL
+  include Elbas::Logger
   include Elbas::AWS::AutoScaling
 
-  autoscale_group   = autoscaling.groups[groupname]
-  running_instances = autoscale_group.ec2_instances.filter('instance-state-name', 'running')
+  set :aws_autoscale_group_name, groupname
 
-  set :aws_autoscale_group, groupname
+  asg = Elbas::AWS::AutoscaleGroup.new groupname
+  instances = asg.instances.running
 
-  running_instances.each do |instance|
-    hostname = instance.dns_name || instance.private_ip_address
-    p "ELBAS: Adding server: #{hostname}"
-    server(hostname, *args)
+  instances.each do |instance|
+    info "Adding server: #{instance.hostname}"
+    server instance.hostname, *args
   end
 
-  if running_instances.count > 0
-    after('deploy', 'elbas:scale')
+  if instances.any?
+    after 'deploy', 'elbas:deploy'
+    after 'elbas:deploy', 'elbas:cleanup'
   else
-    p "ELBAS: AMI could not be created because no running instances were found. Is your autoscale group name correct?"
+    error <<~MESSAGE
+      Could not create AMI because no running instances were found in the specified
+      AutoScale group. Ensure that the AutoScale group name is correct and that
+      there is at least one running instance attached to it.
+    MESSAGE
   end
 end

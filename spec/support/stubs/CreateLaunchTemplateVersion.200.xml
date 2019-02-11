@@ -1,0 +1,11 @@
+<CreateLaunchTemplateResponse xmlns="http://ec2.amazonaws.com/doc/2016-11-15/">
+    <requestId>39f602bc-7580-4239-a6d8-af56example</requestId>
+    <launchTemplate>
+        <createTime>2017-10-31T11:38:52.000Z</createTime>
+        <createdBy>arn:aws:iam::123456789012:root</createdBy>
+        <defaultVersionNumber>1</defaultVersionNumber>
+        <latestVersionNumber>1</latestVersionNumber>
+        <launchTemplateId>lt-0a20c965061f64abc</launchTemplateId>
+        <launchTemplateName>MyLaunchTemplate</launchTemplateName>
+    </launchTemplate>
+</CreateLaunchTemplateResponse>

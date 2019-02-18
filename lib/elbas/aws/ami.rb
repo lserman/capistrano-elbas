@@ -3,6 +3,9 @@ module Elbas
     class AMI < Base
       include Taggable
 
+      DEPLOY_ID_TAG = 'ELBAS-Deploy-id'.freeze
+      DEPLOY_GROUP_TAG = 'ELBAS-Deploy-group'.freeze
+
       attr_reader :id, :snapshots
 
       def initialize(id, snapshots = [])
@@ -15,11 +18,11 @@ module Elbas
       end
 
       def deploy_id
-        tags['ELBAS-Deploy-id']
+        tags[DEPLOY_ID_TAG]
       end
 
       def deploy_group
-        tags['ELBAS-Deploy-group']
+        tags[DEPLOY_GROUP_TAG]
       end
 
       def ancestors
@@ -54,14 +57,14 @@ module Elbas
           aws_client.describe_images({
             owners: ['self'],
             filters: [{
-              name: 'tag:ELBAS-Deploy-group',
+              name: "tag:#{DEPLOY_GROUP_TAG}",
               values: [deploy_group],
             }]
           }).images
         end
 
         def deploy_id_from_aws_tags(tags)
-          tags.detect { |tag| tag.key == 'ELBAS-Deploy-id' }&.value
+          tags.detect { |tag| tag.key == DEPLOY_ID_TAG }&.value
         end
     end
   end

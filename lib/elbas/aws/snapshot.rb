@@ -8,7 +8,8 @@ module Elbas
       end
 
       def delete
-        aws_client.delete_snapshot snapshot_id: id if id
+        return unless id
+        aws_client.delete_snapshot snapshot_id: id
       end
 
       private

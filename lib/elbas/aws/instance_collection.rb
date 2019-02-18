@@ -13,7 +13,7 @@ module Elbas
       end
 
       def running
-        instances.select(&:running?)
+        select(&:running?)
       end
 
       def each(&block)

@@ -10,7 +10,7 @@ module Elbas
 
       def initialize(id, snapshots = [])
         @id = id
-        @aws_counterpart = ::Aws::EC2::Image.new id
+        @aws_counterpart = ::Aws::EC2::Image.new id, client: aws_client
 
         @snapshots = snapshots.map do |snapshot|
           Elbas::AWS::Snapshot.new snapshot&.ebs&.snapshot_id

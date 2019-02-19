@@ -9,7 +9,7 @@ module Elbas
     end
 
     def prefix
-      @prefix ||= color.colorize("\n[ELBAS] ", :cyan)
+      @prefix ||= color.colorize("[ELBAS] ", :cyan)
     end
   end
 end

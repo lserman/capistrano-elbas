@@ -28,8 +28,7 @@ module Elbas
         def query_instances_by_ids(ids)
           aws_client
             .describe_instances(instance_ids: @ids)
-            .reservations[0]
-            .instances
+            .reservations.map(&:instances).flatten
         end
     end
   end

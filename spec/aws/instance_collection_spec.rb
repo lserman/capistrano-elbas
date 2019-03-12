@@ -2,8 +2,8 @@ describe Elbas::AWS::InstanceCollection do
   subject { Elbas::AWS::InstanceCollection.new ['i-1234567890', 'i-500'] }
 
   scenarios = [
-    { context: "Single AWS reservation", mock_response_file: 'DescribeInstances.200.xml'},
-    { context: "Multiple AWS reservation", mock_response_file: 'DescribeInstances_MultipleReservations.200.xml'}
+    { context: 'Single AWS reservation', mock_response_file: 'DescribeInstances.200.xml' },
+    { context: 'Multiple AWS reservation', mock_response_file: 'DescribeInstances_MultipleReservations.200.xml' }
   ]
 
   scenarios.each do |scenario|

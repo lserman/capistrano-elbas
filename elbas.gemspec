@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.6'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
@@ -27,7 +27,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'aws-sdk-autoscaling', '~> 1'
   spec.add_dependency 'aws-sdk-ec2', '~> 1'
-
-  spec.add_dependency 'capistrano', '> 3.0.0'
-  spec.add_dependency 'activesupport', '>= 4.0.0'
+  spec.add_dependency 'capistrano', '> 3'
 end

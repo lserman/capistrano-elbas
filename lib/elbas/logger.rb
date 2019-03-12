@@ -8,8 +8,13 @@ module Elbas
       $stdout.puts [prefix, message, "\n"].join
     end
 
-    def prefix
-      @prefix ||= color.colorize("[ELBAS] ", :cyan)
+    def cyan(text)
+      color.colorize text, :cyan
     end
+
+    private
+      def prefix
+        @prefix ||= cyan('[ELBAS] ')
+      end
   end
 end

@@ -69,3 +69,22 @@ passed to `autoscale`.
 
 Returning anything but `nil` will override the entire properties hash (as
 opposed to merging the two hashes together).
+
+### Listing Servers
+
+You may need to SSH into your servers while debugging deployed code, and
+not everyone has a jumpbox on a basic AutoScaling setup. ELBAS provides a command
+that will list the `ssh` command necessary to connect to each server in any given
+environment:
+
+```
+cap production elbas:ssh
+```
+
+Output will be something like:
+
+```
+[ELBAS] Adding server: ec2-12-34-567-890.compute-1.amazonaws.com
+[ELBAS] SSH commands:
+[ELBAS]     1) ssh deploy@ec2-12-34-567-890.compute-1.amazonaws.com
+```

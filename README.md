@@ -50,3 +50,22 @@ with the new AMI ID after a deployment. It no longer needs to update your
 AutoScale group or mess around with network settings, instance sizes, etc., as
 that information is all contained within the launch template. Failure to use a
 launch template will result in a `Elbas::Errors::NoLaunchTemplate` error.
+
+### Customizing Server Properties
+
+You can pass a block to `autoscale` and return properties for any specific server.
+The block accepts the server and the server's index as arguments.
+
+For example, if you want to apply the `:db` role to only the first server:
+
+```ruby
+autoscale 'my-autoscale-group', roles: [:app, :web] do |server, i|
+  { roles: [:app, :web, :db] } if i == 0
+end
+```
+
+Returning `nil` from this block will cause the server to use the properties
+passed to `autoscale`.
+
+Returning anything but `nil` will override the entire properties hash (as
+opposed to merging the two hashes together).

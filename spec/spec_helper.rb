@@ -1,5 +1,6 @@
 require 'webmock'
 require 'capistrano/all'
+require 'byebug'
 
 ENV['AWS_REGION'] = 'us-east-1'
 ENV['AWS_ACCESS_KEY_ID'] = 'test-access'
@@ -20,3 +21,7 @@ require 'webmock-rspec-helper'
 WebMock.disable_net_connect!
 
 Dir[File.join(File.expand_path('../..', __FILE__), 'spec', 'support', '**', '*.rb')].each { |f| require f }
+
+RSpec.configure do |c|
+  c.include Capistrano::DSL
+end

@@ -10,7 +10,7 @@ describe Elbas::AWS::InstanceCollection do
     context scenario[:context] do
       before do
         webmock :post, %r{ec2.(.*).amazonaws.com\/\z} => scenario[:mock_response_file],
-        with: Hash[body: /Action=DescribeInstances/]
+          with: Hash[body: /Action=DescribeInstances/]
       end
 
       describe '#instances' do

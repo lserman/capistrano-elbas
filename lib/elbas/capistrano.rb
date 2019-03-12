@@ -2,7 +2,7 @@ require 'capistrano/dsl'
 
 load File.expand_path("../tasks/elbas.rake", __FILE__)
 
-def autoscale(groupname, *args)
+def autoscale(groupname, properties = {})
   include Capistrano::DSL
   include Elbas::Logger
 
@@ -11,9 +11,14 @@ def autoscale(groupname, *args)
   asg = Elbas::AWS::AutoscaleGroup.new groupname
   instances = asg.instances.running
 
-  instances.each do |instance|
+  instances.each.with_index do |instance, i|
     info "Adding server: #{instance.hostname}"
-    server instance.hostname, *args
+
+    props = nil
+    props = yield(instance, i) if block_given?
+    props ||= properties
+
+    server instance.hostname, props
   end
 
   if instances.any?

@@ -48,6 +48,20 @@ describe Elbas::AWS::AutoscaleGroup do
       expect(subject.launch_template.version).to eq '$Latest'
     end
 
+    it 'returns a LauchTemplate object for fleet composition' do
+      allow(subject.aws_counterpart).to receive(:launch_template) { nil }
+      allow(subject.aws_counterpart).to receive_message_chain(
+        :mixed_instances_policy, :launch_template,
+        :launch_template_specification) do
+        double(launch_template_id: 'test-2',
+               launch_template_name: 'mixed_instance',
+               version: '$Latest')
+      end
+
+      expect(subject.launch_template.id).to eq 'test-2'
+      expect(subject.launch_template.name).to eq 'mixed_instance'
+      expect(subject.launch_template.version).to eq '$Latest'
+    end
 
   end
 end

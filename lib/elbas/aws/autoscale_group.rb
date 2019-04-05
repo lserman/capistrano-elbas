@@ -17,12 +17,13 @@ module Elbas
       end
 
       def launch_template
-        raise Elbas::Errors::NoLaunchTemplate unless aws_counterpart.launch_template
+        lts = aws_launch_template || aws_launch_template_specification
+        raise Elbas::Errors::NoLaunchTemplate unless lts
 
         LaunchTemplate.new(
-          aws_counterpart.launch_template.launch_template_id,
-          aws_counterpart.launch_template.launch_template_name,
-          aws_counterpart.launch_template.version,
+          lts.launch_template_id,
+          lts.launch_template_name,
+          lts.version
         )
       end
 
@@ -38,6 +39,14 @@ module Elbas
             .first
         end
 
+        def aws_launch_template
+          aws_counterpart.launch_template
+        end
+
+        def aws_launch_template_specification
+          aws_counterpart.mixed_instances_policy&.launch_template
+            &.launch_template_specification
+        end
     end
   end
 end

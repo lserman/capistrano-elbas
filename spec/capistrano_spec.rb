@@ -63,4 +63,15 @@ describe '#autoscale' do
       expect(env.servers.to_a[1].properties.keys).to_not include :primary
     end
   end
+
+  context 'no servers' do
+    before do
+      webmock :post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeInstances_Empty.200.xml',
+        with: Hash[body: /Action=DescribeInstances/]
+    end
+
+    it 'logs as an error' do
+      expect { autoscale 'test-asg' }.to output.to_stderr
+    end
+  end
 end

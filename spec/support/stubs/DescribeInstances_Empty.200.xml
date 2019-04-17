@@ -1,0 +1,17 @@
+<DescribeInstancesResponse xmlns="http://ec2.amazonaws.com/doc/2014-10-01/">
+  <requestId>fdcdcab1-ae5c-489e-9c33-4637c5dda355</requestId>
+    <reservationSet>
+      <item>
+        <reservationId>r-1a2b3c4d</reservationId>
+        <ownerId>123456789012</ownerId>
+        <groupSet>
+          <item>
+            <groupId>sg-1a2b3c4d</groupId>
+            <groupName>my-security-group</groupName>
+          </item>
+        </groupSet>
+        <instancesSet>
+        </instancesSet>
+      </item>
+    </reservationSet>
+    </DescribeInstancesResponse>

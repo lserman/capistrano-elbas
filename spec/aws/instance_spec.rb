@@ -1,6 +1,6 @@
 describe Elbas::AWS::Instance do
   context 'with Public DNS' do
-    subject { Elbas::AWS::Instance.new 'i-1234567890', 'ec2-1234567890.amazonaws.com', nil,16 }
+    subject { Elbas::AWS::Instance.new 'i-1234567890', 'ec2-1234567890.amazonaws.com', 16 }
 
     describe '#initialize' do
       it 'sets the AWS counterpart' do
@@ -26,16 +26,6 @@ describe Elbas::AWS::Instance do
           expect(subject).to receive(:state) { code }
           expect(subject).to_not be_running
         end
-      end
-    end
-  end
-
-  context 'without Public DNS' do
-    subject { Elbas::AWS::Instance.new 'i-1234567890', '', '10.0.0.12',16 }
-
-    describe '#hostname' do
-      it 'returns the public DNS' do
-        expect(subject.hostname).to eq '10.0.0.12'
       end
     end
   end

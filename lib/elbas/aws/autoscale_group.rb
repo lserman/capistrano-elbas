@@ -1,10 +1,11 @@
 module Elbas
   module AWS
     class AutoscaleGroup < Base
-      attr_reader :name
+      attr_reader :name, :hostname_method
 
-      def initialize(name)
+      def initialize(name, hostname_method)
         @name = name
+        @hostname_method = find_hostname_method(hostname_method)
         @aws_counterpart = query_autoscale_group_by_name(name)
       end
 
@@ -13,7 +14,7 @@ module Elbas
       end
 
       def instances
-        InstanceCollection.new instance_ids
+        InstanceCollection.new instance_ids, hostname_method
       end
 
       def launch_template
@@ -46,6 +47,16 @@ module Elbas
         def aws_launch_template_specification
           aws_counterpart.mixed_instances_policy&.launch_template
             &.launch_template_specification
+        end
+
+        def find_hostname_method(method)
+          methods = [
+              :public_dns_name,
+              :public_ip_address,
+              :private_dns_name,
+              :private_ip_address
+          ]
+          methods.include?(method) ? method : methods[0]
         end
     end
   end

@@ -21,6 +21,11 @@ describe '#autoscale' do
       expect(env.servers.first.hostname).to eq 'ec2-1234567890.amazonaws.com'
     end
 
+    it 'uses the hostname_method' do
+      autoscale 'test-asg', hostname_method: :private_ip_address
+      expect(env.servers.first.hostname).to eq '10.0.0.12'
+    end
+
     it 'passes along the properties' do
       autoscale 'test-asg', roles: [:db], primary: true
       expect(env.servers.first.properties.roles).to match_array [:db]

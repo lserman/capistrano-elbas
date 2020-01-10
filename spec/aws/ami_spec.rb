@@ -104,7 +104,7 @@ describe Elbas::AWS::AMI do
 
   describe '.create' do
     subject { described_class }
-    let(:instance) { Elbas::AWS::Instance.new 'i-1234567890', nil, nil, nil }
+    let(:instance) { Elbas::AWS::Instance.new 'i-1234567890', nil, nil }
 
     before do
       webmock :post, %r{ec2.(.*).amazonaws.com\/\z} => 'CreateImage.200.xml',

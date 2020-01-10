@@ -3,18 +3,13 @@ module Elbas
     class Instance < Base
       STATE_RUNNING = 16.freeze
 
-      attr_reader :aws_counterpart, :id, :state
+      attr_reader :aws_counterpart, :id, :state, :hostname
 
-      def initialize(id, public_dns, private_ip, state)
+      def initialize(id, hostname, state)
         @id = id
-        @public_dns = public_dns
-        @private_ip = private_ip
+        @hostname = hostname
         @state = state
         @aws_counterpart = aws_namespace::Instance.new id, client: aws_client
-      end
-
-      def hostname
-        @public_dns == '' ? @private_ip : @public_dns
       end
 
       def running?

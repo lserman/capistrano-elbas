@@ -35,4 +35,23 @@ describe Elbas::AWS::InstanceCollection do
     end
   end
 
+  context 'Multiple AWS running, no public dns' do
+    before do
+      webmock :post, %r{ec2.(.*).amazonaws.com\/\z} => 'DescribeInstances_MultipleRunningNoPublic.200.xml',
+        with: Hash[body: /Action=DescribeInstances/]
+    end
+
+    describe '#instances' do
+      it 'returns Instance objects with name/hostname/state' do
+        expect(subject.instances[0].id).to eq 'i-1234567890'
+        expect(subject.instances[0].hostname).to eq '10.0.0.12'
+        expect(subject.instances[0].state).to eq 16
+
+        expect(subject.instances[1].id).to eq 'i-1122334455'
+        expect(subject.instances[1].hostname).to eq '10.0.0.12'
+        expect(subject.instances[1].state).to eq 16
+      end
+    end
+  end
+
 end

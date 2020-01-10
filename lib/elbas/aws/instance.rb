@@ -5,15 +5,16 @@ module Elbas
 
       attr_reader :aws_counterpart, :id, :state
 
-      def initialize(id, public_dns, state)
+      def initialize(id, public_dns, private_ip, state)
         @id = id
         @public_dns = public_dns
+        @private_ip = private_ip
         @state = state
         @aws_counterpart = aws_namespace::Instance.new id, client: aws_client
       end
 
       def hostname
-        @public_dns
+        @public_dns == '' ? @private_ip : @public_dns
       end
 
       def running?

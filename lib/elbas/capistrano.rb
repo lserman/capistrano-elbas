@@ -8,7 +8,12 @@ def autoscale(groupname, properties = {})
 
   set :aws_autoscale_group_name, groupname
 
-  asg = Elbas::AWS::AutoscaleGroup.new groupname
+  skip_ami = properties.delete(:skip_ami)
+  hostname_method = properties.delete(:hostname_method)
+
+  set :hostname_method, hostname_method
+
+  asg = Elbas::AWS::AutoscaleGroup.new groupname, hostname_method
   instances = asg.instances.running
 
   instances.each.with_index do |instance, i|
@@ -22,7 +27,9 @@ def autoscale(groupname, properties = {})
   end
 
   if instances.any?
-    after 'deploy', 'elbas:deploy'
+    unless skip_ami
+      after 'deploy', 'elbas:deploy'
+    end
   else
     error <<~MESSAGE
       Could not create AMI because no running instances were found in the specified

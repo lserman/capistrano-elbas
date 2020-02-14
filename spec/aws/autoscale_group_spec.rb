@@ -1,5 +1,5 @@
 describe Elbas::AWS::AutoscaleGroup do
-  subject { Elbas::AWS::AutoscaleGroup.new 'test-asg' }
+  subject { Elbas::AWS::AutoscaleGroup.new 'test-asg', nil }
 
   before do
     webmock :post, %r{autoscaling.(.*).amazonaws.com\/\z} => 'DescribeAutoScalingGroups.200.xml',
@@ -63,5 +63,24 @@ describe Elbas::AWS::AutoscaleGroup do
       expect(subject.launch_template.version).to eq '$Latest'
     end
 
+  end
+
+  describe ' assigning hostname_method' do
+    it 'should default to public dns' do
+      group = Elbas::AWS::AutoscaleGroup.new 'test-asg', nil
+      expect(group.hostname_method).to eq :public_dns_name
+    end
+
+    it 'should assign acceptable alternatives' do
+      [:public_ip_address, :private_dns_name, :private_ip_address]. each do |method|
+        group = Elbas::AWS::AutoscaleGroup.new 'test-asg', method
+        expect(group.hostname_method).to eq method
+      end
+    end
+
+    it 'should fall back to public dns with bad method name' do
+      group = Elbas::AWS::AutoscaleGroup.new 'test-asg', :hostname
+      expect(group.hostname_method).to eq :public_dns_name
+    end
   end
 end

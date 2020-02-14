@@ -9,8 +9,11 @@ def autoscale(groupname, properties = {})
   set :aws_autoscale_group_name, groupname
 
   skip_ami = properties.delete(:skip_ami)
+  hostname_method = properties.delete(:hostname_method)
 
-  asg = Elbas::AWS::AutoscaleGroup.new groupname, properties.delete(:hostname_method)
+  set :hostname_method, hostname_method
+
+  asg = Elbas::AWS::AutoscaleGroup.new groupname, hostname_method
   instances = asg.instances.running
 
   instances.each.with_index do |instance, i|

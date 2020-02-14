@@ -12,7 +12,7 @@ namespace :elbas do
   end
 
   task :deploy do
-    asg = Elbas::AWS::AutoscaleGroup.new fetch(:aws_autoscale_group_name)
+    asg = Elbas::AWS::AutoscaleGroup.new fetch(:aws_autoscale_group_name), fetch(:hostname_method)
 
     info "Creating AMI from a running instance..."
     ami = Elbas::AWS::AMI.create asg.instances.running.sample

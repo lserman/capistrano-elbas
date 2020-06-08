@@ -3,6 +3,9 @@ module Elbas
     class Base
       include Capistrano::DSL
 
+      HOSTNAME_TYPES = %w(public_ip_address public_dns_name private_ip_address private_dns_name).freeze
+      DEFAULT_HOSTNAME_TYPE = 'public_dns_name'.freeze
+
       attr_reader :aws_counterpart
 
       def aws_client(namespace = aws_namespace)
@@ -29,6 +32,10 @@ module Elbas
 
       def aws_region
         fetch :aws_region
+      end
+
+      def elbas_hostname_type
+        HOSTNAME_TYPES.include?(fetch(:elbas_hostname_type)) ? fetch(:elbas_hostname_type) : DEFAULT_HOSTNAME_TYPE
       end
 
       def self.aws_client(namespace = aws_namespace)

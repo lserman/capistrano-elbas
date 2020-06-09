@@ -42,6 +42,13 @@ the name of your AutoScale group instead of a hostname:
 autoscale 'my-autoscale-group', user: 'apps', roles: [:app, :web, :db]
 ```
 
+If you have multiple autoscaling groups to deploy to, specify each of them:
+
+```ruby
+autoscale 'app-autoscale-group', user: 'apps', roles: [:app, :web]
+autoscale 'worker-autoscale-group', user: 'apps', roles: [:worker]
+```
+
 Run `cap production deploy`.
 
 **As of version 3, your AWS setup must use launch templates as opposed to launch

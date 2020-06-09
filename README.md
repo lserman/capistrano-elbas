@@ -32,6 +32,12 @@ set :aws_secret_key, ENV['AWS_SECRET_ACCESS_KEY']
 set :aws_region,     ENV['AWS_REGION']
 ```
 
+Define how many past AMIs to keep during cleanup. The default is 5.
+
+```ruby
+set :elbas_keep_amis, 5
+```
+
 ## Usage
 
 Instead of using Capistrano's `server` method, use `autoscale` instead in

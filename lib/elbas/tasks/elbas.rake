@@ -25,9 +25,14 @@ namespace :elbas do
     info "Updated launch template, new default version = #{launch_template.version}"
 
     info "Cleaning up old AMIs..."
-    ami.ancestors.each do |ancestor|
-      info "Deleting old AMI: #{ancestor.id}"
-      ancestor.delete
+    keep = fetch(:elbas_keep_amis) || 5
+    if ami.ancestors.count > keep
+      amis = ami.ancestors.drop(keep)
+      amis.each do |ancestor|
+        info "Deleting old AMI: #{ancestor.id}"
+        ancestor.delete
+      end
+      info "Deleted #{amis.count} old AMIs and keeping newest #{keep}"
     end
 
     info "Deployment complete!"

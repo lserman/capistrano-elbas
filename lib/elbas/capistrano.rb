@@ -6,11 +6,12 @@ def autoscale(groupname, properties = {})
   include Capistrano::DSL
   include Elbas::Logger
 
-  set :aws_autoscale_group_name, groupname
+  set :aws_autoscale_group_names, Array(fetch(:aws_autoscale_group_names)).push(groupname)
 
   asg = Elbas::AWS::AutoscaleGroup.new groupname
   instances = asg.instances.running
 
+  info "Auto Scaling Group: #{groupname}"
   instances.each.with_index do |instance, i|
     info "Adding server: #{instance.hostname}"
 

@@ -1,0 +1,11 @@
+<ModifyLaunchTemplateResponse 
+  xmlns="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/modify-launch-template.html">
+  <LaunchTemplate>
+        <CreateTime>2017-12-01T13:35:46.000Z</CreateTime>
+        <CreatedBy>arn:aws:iam::123456789012:root</CreatedBy>
+        <DefaultVersionNumber>2</DefaultVersionNumber>
+        <LatestVersionNumber>2</LatestVersionNumber>
+        <LaunchTemplateId>lt-0abcd290751193123</LaunchTemplateId>
+        <LaunchTemplateName>WebServers</LaunchTemplateName>
+     </LaunchTemplate>
+</ModifyLaunchTemplateResponse>

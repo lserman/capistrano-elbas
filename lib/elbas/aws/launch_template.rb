@@ -16,15 +16,15 @@ module Elbas
           source_version: self.version
         }).launch_template_version
 
-        response = aws_client.modify_launch_template({
+        latest = aws_client.modify_launch_template({
           default_version: latest.version_number.to_s,
           launch_template_id: latest.launch_template_id
         })
 
         self.class.new(
-          response&.launch_template_id,
-          response&.launch_template_name,
-          response&.version_number
+          latest&.launch_template_id,
+          latest&.launch_template_name,
+          latest&.version_number
         )
       end
 

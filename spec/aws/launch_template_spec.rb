@@ -3,7 +3,9 @@ describe Elbas::AWS::LaunchTemplate do
 
   before do
     webmock :post, %r{ec2.(.*).amazonaws.com\/\z} => 'CreateLaunchTemplateVersion.200.xml',
-      with: Hash[body: /Action=CreateLaunchTemplateVersion/]
+                   with: Hash[body: /Action=CreateLaunchTemplateVersion/]
+    webmock :post, %r{ec2.(.*).amazonaws.com\/\z} => 'ModifyLaunchTemplate.200.xml',
+                   with: Hash[body: /Action=ModifyLaunchTemplate/]
   end
 
   describe '#initialize' do
@@ -40,6 +42,13 @@ describe Elbas::AWS::LaunchTemplate do
       expect(WebMock)
         .to have_requested(:post, /ec2/)
         .with(body: %r{LaunchTemplateId=test-lt&SourceVersion=1})
+    end
+
+    it 'updates default launch template version' do
+      subject.update double(:ami, id: 'ami-123')
+      expect(WebMock)
+        .to have_requested(:post, /ec2/)
+        .with(body: %r{Action=ModifyLaunchTemplate})
     end
 
     it 'returns a new launch template' do

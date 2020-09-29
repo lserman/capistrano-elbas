@@ -1,0 +1,28 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      # bundler
+      - restore_cache:
+          keys:
+            - elbas-bundle-v1-{{ checksum "elbas.gemspec" }}
+      - run:
+          name: Bundle Install
+          command: bundle install && bundle clean
+      - save_cache:
+          key: elbas-bundle-v1-{{ checksum "elbas.gemspec" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Run tests
+          command: bundle exec rspec --profile 10 --out tmp/rspec/rspec.xml --format progress

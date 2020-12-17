@@ -32,6 +32,12 @@ set :aws_secret_key, ENV['AWS_SECRET_ACCESS_KEY']
 set :aws_region,     ENV['AWS_REGION']
 ```
 
+Set the means through which to communicate with instances. Select from `public_dns_name` *(the default)*, `public_ip_address`, `private_dns_name` and `private_ip_address`. For example, if you are using a bastion host and SSHing into your instances via a private subnet you would want to add the following:
+
+```ruby
+set :elbas_hostname_type, 'private_ip_address'
+```
+
 ## Usage
 
 Instead of using Capistrano's `server` method, use `autoscale` instead in

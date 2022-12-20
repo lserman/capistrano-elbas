@@ -12,12 +12,25 @@ namespace :elbas do
   end
 
   task :deploy do
+    include Capistrano::DSL
+    deploy_servers = env.filter(env.servers).map(&:hostname)
+
     fetch(:aws_autoscale_group_names).each do |aws_autoscale_group_name|
       info "Auto Scaling Group: #{aws_autoscale_group_name}"
       asg = Elbas::AWS::AutoscaleGroup.new aws_autoscale_group_name
 
+      instances_in_current_deploy = asg.instances.running.select do |instance|
+        hostname = instance.hostname
+        deploy_servers.include?(hostname)        
+      end
+
+      unless instances_in_current_deploy.any?
+        info "Auto Scaling Group #{aws_autoscale_group_name} skip AMI creation"
+        next
+      end
+
       info "Creating AMI from a running instance..."
-      ami = Elbas::AWS::AMI.create asg.instances.running.sample
+      ami = Elbas::AWS::AMI.create instances_in_current_deploy.sample
       ami.tag 'ELBAS-Deploy-group', asg.name
       ami.tag 'ELBAS-Deploy-id', env.timestamp.to_i.to_s
       info  "Created AMI: #{ami.id}"

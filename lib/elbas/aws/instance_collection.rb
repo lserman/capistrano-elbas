@@ -8,7 +8,8 @@ module Elbas
       def initialize(ids)
         @ids = ids
         @instances = query_instances_by_ids(ids).map do |i|
-          Instance.new(i.instance_id, i.public_dns_name, i.state.code)
+          hostname = i.public_dns_name != "" ? i.public_dns_name : i.private_ip_address
+          Instance.new(i.instance_id, hostname, i.state.code)
         end
       end
 

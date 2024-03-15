@@ -16,6 +16,16 @@ module Elbas
         InstanceCollection.new instance_ids
       end
 
+      def pause
+        puts "PAUSING autoscaling group #{name}"
+        aws_client.suspend_processes(auto_scaling_group_name: name, scaling_processes: [ 'Launch', 'Terminate'])
+      end
+
+      def resume
+        puts "RESUMING autoscaling group #{name}"
+        aws_client.resume_processes(auto_scaling_group_name: name, scaling_processes: [ 'Launch', 'Terminate'])
+      end
+
       def launch_template
         lts = aws_launch_template || aws_launch_template_specification
         raise Elbas::Errors::NoLaunchTemplate unless lts

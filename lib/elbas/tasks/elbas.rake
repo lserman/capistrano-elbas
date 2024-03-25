@@ -11,6 +11,14 @@ namespace :elbas do
     end
   end
 
+  task :pause_autoscaling do
+    fetch(:aws_autoscale_group_names).each do |aws_autoscale_group_name|
+      info "Pausing Auto Scaling Group: #{aws_autoscale_group_name}"
+      asg = Elbas::AWS::AutoscaleGroup.new aws_autoscale_group_name
+      asg.pause
+    end
+  end
+
   task :deploy do
     fetch(:aws_autoscale_group_names).each do |aws_autoscale_group_name|
       info "Auto Scaling Group: #{aws_autoscale_group_name}"
@@ -32,7 +40,12 @@ namespace :elbas do
         ancestor.delete
       end
 
+      info "resume_autoscaling"
+      asg.resume
       info "Deployment complete!"
     end
   end
 end
+
+before "deploy:started", "elbas:pause_autoscaling"
+

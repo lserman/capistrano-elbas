@@ -58,6 +58,9 @@ AutoScale group or mess around with network settings, instance sizes, etc., as
 that information is all contained within the launch template. Failure to use a
 launch template will result in a `Elbas::Errors::NoLaunchTemplate` error.
 
+### Aws Config notes
+The `capistrano_roles` tag should **NOT** be on any instance attached to an autoscaling group. If it is this could result in SSHKit errors or double deploys of the same code. The `capistrano_roles` tag is still used, but only for instances/roles that are not attached to an ASG. 
+
 ### Customizing Server Properties
 
 You can pass a block to `autoscale` and return properties for any specific server.
